@@ -1,6 +1,5 @@
-package com.gabrielgrs1.pokedex.ui.theme
+package com.gabrielgrs1.pokedex.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

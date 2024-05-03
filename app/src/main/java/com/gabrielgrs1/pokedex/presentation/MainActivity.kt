@@ -1,4 +1,4 @@
-package com.gabrielgrs1.pokedex.ui
+package com.gabrielgrs1.pokedex.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gabrielgrs1.pokedex.ui.theme.PokedexTheme
+import com.gabrielgrs1.pokedex.presentation.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

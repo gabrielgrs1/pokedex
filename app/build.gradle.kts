@@ -1,6 +1,7 @@
 ﻿plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-parcelize") // FIXME: Move to version catalog
 }
 
 android {
@@ -19,6 +20,7 @@ android {
             useSupportLibrary = true
         }
         buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
+        buildConfigField("String", "IMAGE_URL", "\"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\"")
     }
 
     buildFeatures {
@@ -43,17 +45,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "19"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.13"
     }
     packaging {
         resources {
@@ -93,11 +95,7 @@ dependencies {
 
     // Network - Room
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.paging)
     annotationProcessor(libs.androidx.room.compiler)
-
-    // Network - Paging
-    implementation(libs.androidx.paging.compose)
 
     // DI
     implementation(platform(libs.koin.bom))

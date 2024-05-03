@@ -1,4 +1,4 @@
-package com.gabrielgrs1.pokedex.di
+package com.gabrielgrs1.pokedex.core
 
 import com.gabrielgrs1.pokedex.BuildConfig
 import com.google.gson.GsonBuilder
@@ -10,8 +10,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
-val appModule = module {
+const val NETWORK_TIMEOUT = 2L
 
+val appModule = module {
     single {
         HttpLoggingInterceptor { message ->
             Timber.d("Http: $message")
@@ -22,9 +23,9 @@ val appModule = module {
 
     single {
         OkHttpClient.Builder()
-            .connectTimeout(2, TimeUnit.MINUTES)
-            .readTimeout(2, TimeUnit.MINUTES)
-            .writeTimeout(2, TimeUnit.MINUTES)
+            .connectTimeout(NETWORK_TIMEOUT, TimeUnit.MINUTES)
+            .readTimeout(NETWORK_TIMEOUT, TimeUnit.MINUTES)
+            .writeTimeout(NETWORK_TIMEOUT, TimeUnit.MINUTES)
             .addInterceptor(get<HttpLoggingInterceptor>())
             .build()
     }
@@ -37,3 +38,20 @@ val appModule = module {
             .build()
     }
 }
+
+val searchPokemonsModule = module {
+    // TODO
+}
+
+val pokemonDetailsModule = module {
+    // TODO
+}
+
+val listPokemonsModule = module {
+    // TODO
+}
+
+val favoritePokemonsModule = module {
+    // TODO
+}
+
