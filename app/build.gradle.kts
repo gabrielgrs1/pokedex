@@ -18,6 +18,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
     }
 
     buildFeatures {
@@ -31,7 +32,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "https://pokeapi.co/api/v2/")
         }
 
         debug {
@@ -40,7 +40,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "https://pokeapi.co/api/v2/")
         }
     }
     compileOptions {
@@ -89,7 +88,6 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
 
     // Network - Coil
-    implementation(libs.coil.bom)
     implementation(libs.coil.compose.base)
     implementation(libs.coil.compose)
 

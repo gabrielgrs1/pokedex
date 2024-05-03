@@ -1,4 +1,4 @@
-package com.gabrielgrs1.pokedex
+package com.gabrielgrs1.pokedex.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
