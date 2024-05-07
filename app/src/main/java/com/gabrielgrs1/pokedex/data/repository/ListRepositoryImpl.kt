@@ -1,22 +1,20 @@
 package com.gabrielgrs1.pokedex.data.repository
 
+import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
 import com.gabrielgrs1.pokedex.data.datasource.ListApi
-import com.gabrielgrs1.pokedex.data.datasource.CacheDao
-import com.gabrielgrs1.pokedex.data.model.PokemonEntity
 import com.gabrielgrs1.pokedex.data.model.PokemonResponse
-import com.gabrielgrs1.pokedex.domain.repository.IListRepository
+import com.gabrielgrs1.pokedex.domain.repository.ListRepository
 
 class ListRepositoryImpl(
     private val api: ListApi,
-    private val cacheDao: CacheDao
-) : IListRepository {
-    override suspend fun listPokemonsCache(page: Int): List<PokemonEntity> =
-        cacheDao.getPokemonListByPage(page)
+    private val pokemonDao: PokemonDao
+) : ListRepository {
 
-    override suspend fun listPokemonsApi(page: Int): List<PokemonResponse> =
+    override suspend fun listPokemons(page: Int): PokemonResponse =
         api.listPokemons(limit = PAGE_LIMIT, offset = page * PAGE_LIMIT)
 
+
     companion object {
-        const val PAGE_LIMIT = 50
+        const val PAGE_LIMIT = 20
     }
 }

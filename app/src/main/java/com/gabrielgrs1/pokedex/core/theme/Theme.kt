@@ -1,4 +1,4 @@
-package com.gabrielgrs1.pokedex.presentation.theme
+package com.gabrielgrs1.pokedex.core.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

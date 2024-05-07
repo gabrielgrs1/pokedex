@@ -2,6 +2,7 @@
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-parcelize") // FIXME: Move to version catalog
+    id("kotlin-kapt") // FIXME: Move to version catalog
 }
 
 android {
@@ -95,20 +96,25 @@ dependencies {
 
     // Network - Room
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
     annotationProcessor(libs.androidx.room.compiler)
+    kapt(libs.androidx.room.compiler)
 
     // DI
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)
+    implementation(libs.koin.core.coroutines)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose.navigation)
+    implementation(libs.koin.compose)
 
     // Logger
     implementation(libs.timber)
 
     // Test
     testImplementation(libs.junit)
-    testImplementation(libs.mockk.mockk)
+    testImplementation(libs.mockk)
     testImplementation(libs.kluent.android)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.koin.test)

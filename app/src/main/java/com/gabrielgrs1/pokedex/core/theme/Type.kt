@@ -1,4 +1,4 @@
-package com.gabrielgrs1.pokedex.presentation.theme
+package com.gabrielgrs1.pokedex.core.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -9,9 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.gabrielgrs1.pokedex.presentation.theme.PokedexTheme
+import com.gabrielgrs1.pokedex.presentation.uistate.HomeUiState
+import com.gabrielgrs1.pokedex.core.theme.PokedexTheme
+import com.gabrielgrs1.pokedex.presentation.viewmodel.HomeViewModel
+import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +25,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokedexTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    KoinContext {
+                        GreetingRoute(
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
                 }
             }
         }
@@ -31,17 +37,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(homeUiState: HomeUiState, modifier: Modifier = Modifier) {
+    if (homeUiState.content.isNotEmpty())
     Text(
-        text = "Hello $name!",
+        text = "Hello world! ${homeUiState.content[0].name}",
         modifier = modifier
     )
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    PokedexTheme {
-        Greeting("Android")
-    }
+fun GreetingRoute(homeViewModel: HomeViewModel = koinViewModel(), modifier: Modifier = Modifier) {
+    val uiState by homeViewModel.uiState.collectAsState()
+    Greeting(homeUiState = uiState, modifier)
 }

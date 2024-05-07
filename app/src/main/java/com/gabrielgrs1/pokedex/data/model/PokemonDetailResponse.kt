@@ -7,14 +7,14 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PokemonDetailResponse(
-    val id: Int? = null,
-    val name: String? = null,
-    val weight: Int? = null,
-    val height: String? = null,
-    val types: List<Types>? = null,
-    val stats: List<Stats>? = null,
-    val abilities: List<Abilities>? = null,
-    val sprites: Sprites? = null,
+    @SerializedName("id") val id: Int? = null,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("weight") val weight: Int? = null,
+    @SerializedName("height") val height: String? = null,
+    @SerializedName("types") val types: List<Types>? = null,
+    @SerializedName("stats") val stats: List<Stats>? = null,
+    @SerializedName("abilities") val abilities: List<Abilities>? = null,
+    @SerializedName("sprites") val sprites: Sprites? = null,
 ) : Parcelable {
 
     internal fun getImageUrl() = sprites?.other?.officialArtwork?.frontDefault.orEmpty()
@@ -25,7 +25,7 @@ data class PokemonDetailResponse(
 
     @Parcelize
     data class Sprites(
-        val other: Other? = null
+        @SerializedName("other") val other: Other? = null
     ) : Parcelable {
 
         @Parcelize
@@ -43,34 +43,34 @@ data class PokemonDetailResponse(
     @Parcelize
     data class Stats(
         @SerializedName("base_stat") val baseStat: Int? = null,
-        val stat: Stat? = null
+        @SerializedName("stat") val stat: Stat? = null
     ) : Parcelable {
 
         @Parcelize
         data class Stat(
-            val name: String? = null
+            @SerializedName("name") val name: String? = null
         ) : Parcelable
     }
 
     @Parcelize
     data class Types(
-        val type: Type? = null,
+        @SerializedName("type") val type: Type? = null,
     ) : Parcelable {
 
         @Parcelize
         data class Type(
-            val name: String? = null
+            @SerializedName("name") val name: String? = null
         ) : Parcelable
     }
 
     @Parcelize
     data class Abilities(
-        val ability: Ability? = null,
+        @SerializedName("ability") val ability: Ability? = null,
     ) : Parcelable {
 
         @Parcelize
         data class Ability(
-            val name: String? = null
+            @SerializedName("name") val name: String? = null
         ) : Parcelable
     }
 }
