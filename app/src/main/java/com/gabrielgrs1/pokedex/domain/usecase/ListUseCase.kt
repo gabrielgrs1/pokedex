@@ -3,8 +3,8 @@ package com.gabrielgrs1.pokedex.domain.usecase
 import com.gabrielgrs1.pokedex.core.platform.UseCaseResult
 import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
 import com.gabrielgrs1.pokedex.data.model.PokemonEntity
-import com.gabrielgrs1.pokedex.data.model.toPokemon
-import com.gabrielgrs1.pokedex.data.model.toPokemonEntity
+import com.gabrielgrs1.pokedex.data.model.toDomain
+import com.gabrielgrs1.pokedex.data.model.toEntity
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import com.gabrielgrs1.pokedex.domain.repository.ListRepository
 import kotlinx.coroutines.Dispatchers
@@ -22,20 +22,20 @@ open class ListUseCase(
             val cachedPokemons = dao.getPokemonListByPage(page)
 
             if (cachedPokemons.isNotEmpty()) {
-                val cachedPokemonsConverted = cachedPokemons.map { it.toPokemon() }
+                val cachedPokemonsConverted = cachedPokemons.map { it.toDomain() }
                 emit(UseCaseResult.Success(cachedPokemonsConverted))
+            } else {
+                val pokemonListEntity = arrayListOf<PokemonEntity>()
+
+                listRepository.listPokemons(page).results?.map {
+                    pokemonListEntity.add(it.toEntity(page))
+                    pokemonList.add(it.toDomain())
+                }
+
+                dao.insertPokemonPage(pokemonListEntity)
+
+                emit(UseCaseResult.Success(pokemonList))
             }
-
-            val pokemonListEntity = arrayListOf<PokemonEntity>()
-
-            listRepository.listPokemons(page).results?.map {
-                pokemonListEntity.add(it.toPokemonEntity(page))
-                pokemonList.add(it.toPokemon())
-            }
-
-            dao.insertPokemonPage(pokemonListEntity)
-
-            emit(UseCaseResult.Success(pokemonList))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(UseCaseResult.Error(e.message))

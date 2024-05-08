@@ -2,6 +2,7 @@ package com.gabrielgrs1.pokedex.core.di
 
 import androidx.room.Room
 import com.gabrielgrs1.pokedex.BuildConfig
+import com.gabrielgrs1.pokedex.core.Constants
 import com.gabrielgrs1.pokedex.core.db.AppDataBase
 import com.gabrielgrs1.pokedex.data.datasource.DetailsApi
 import com.gabrielgrs1.pokedex.data.datasource.ListApi
@@ -13,7 +14,6 @@ import com.gabrielgrs1.pokedex.domain.repository.ListRepository
 import com.gabrielgrs1.pokedex.domain.usecase.ListUseCase
 import com.gabrielgrs1.pokedex.presentation.viewmodel.DetailsViewModel
 import com.gabrielgrs1.pokedex.presentation.viewmodel.HomeViewModel
-import com.gabrielgrs1.pokedex.presentation.viewmodel.SearchViewModel
 import com.google.gson.GsonBuilder
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
@@ -59,14 +59,10 @@ val detailsModule = module {
     viewModel { DetailsViewModel(detailsRepository = get(), dao = get()) }
 }
 
-val searchModule = module {
-    viewModel { SearchViewModel(get()) }
-}
-
 val homeModule = module {
     single { get<Retrofit>().create(ListApi::class.java) }
 
-    single<ListRepository> { ListRepositoryImpl(api = get(), pokemonDao = get()) }
+    single<ListRepository> { ListRepositoryImpl(api = get()) }
 
     factory {
         ListUseCase(
@@ -75,7 +71,7 @@ val homeModule = module {
         )
     }
 
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
 }
 
 fun provideDao(postDataBase: AppDataBase): PokemonDao = postDataBase.pokemonDao()
@@ -84,7 +80,7 @@ val dataBaseModule = module {
     single {
         Room.databaseBuilder(
             androidApplication(),
-            AppDataBase::class.java, "pokemon-database"
+            AppDataBase::class.java, Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration().build()
     }
     single { provideDao(get()) }

@@ -1,7 +1,9 @@
 package com.gabrielgrs1.pokedex.data.model
 
 import android.os.Parcelable
-import com.gabrielgrs1.pokedex.BuildConfig
+import com.gabrielgrs1.pokedex.core.Constants.IMAGE_URL
+import com.gabrielgrs1.pokedex.core.formatPokemonName
+import com.gabrielgrs1.pokedex.core.getPokemonIndex
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -20,17 +22,17 @@ data class PokemonResult(
     @SerializedName("url") val url: String? = null
 ) : Parcelable
 
-fun PokemonResult.toPokemon(): Pokemon {
-    val index = this.url?.split("/")?.last()
+fun PokemonResult.toDomain(): Pokemon {
+    val index = this.url?.getPokemonIndex()
 
     return Pokemon(
-        name = this.name.orEmpty(),
-        imageUrl = if (index.isNullOrEmpty().not()) BuildConfig.IMAGE_URL + index + ".png"
+        name = this.name.orEmpty().formatPokemonName(),
+        imageUrl = if (index.isNullOrEmpty().not()) "$IMAGE_URL$index.png"
         else ""
     )
 }
 
-fun PokemonResult.toPokemonEntity(page: Int) = PokemonEntity(
+fun PokemonResult.toEntity(page: Int) = PokemonEntity(
     name = this.name.orEmpty(),
     page = page,
     url = this.url.orEmpty()

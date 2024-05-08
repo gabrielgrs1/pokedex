@@ -5,5 +5,6 @@ import com.gabrielgrs1.pokedex.domain.model.Pokemon
 data class HomeUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
-    val content: List<Pokemon> = listOf()
+    val isEmpty: Boolean = false,
+    val pokemonList: List<Pokemon> = emptyList(),
 )
