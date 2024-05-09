@@ -32,7 +32,7 @@ class HomeViewModel(
         listPokemons()
     }
 
-    private fun listPokemons() {
+    fun listPokemons() {
         viewModelScope.launch(coroutineContext) {
             listUseCase(page).collect {
                 when (it) {
@@ -99,6 +99,6 @@ class HomeViewModel(
     }
 
     companion object {
-        private const val INITIAL_PAGE = 0
+        const val INITIAL_PAGE = 0
     }
 }

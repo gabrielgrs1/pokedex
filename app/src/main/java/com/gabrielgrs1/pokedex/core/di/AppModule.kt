@@ -2,7 +2,7 @@ package com.gabrielgrs1.pokedex.core.di
 
 import androidx.room.Room
 import com.gabrielgrs1.pokedex.BuildConfig
-import com.gabrielgrs1.pokedex.core.Constants
+import com.gabrielgrs1.pokedex.core.utils.Constants
 import com.gabrielgrs1.pokedex.core.db.AppDataBase
 import com.gabrielgrs1.pokedex.data.datasource.DetailsApi
 import com.gabrielgrs1.pokedex.data.datasource.ListApi

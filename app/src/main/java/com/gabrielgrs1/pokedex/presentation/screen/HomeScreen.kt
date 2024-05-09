@@ -3,6 +3,7 @@ package com.gabrielgrs1.pokedex.presentation.screen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridState
@@ -10,13 +11,17 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -29,35 +34,52 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(
-    homeUiState: HomeUiState,
+    uiState: HomeUiState,
     modifier: Modifier = Modifier,
     onEndOfListReached: () -> Unit = {},
     onPokemonClicked: (String) -> Unit = {},
     onSearchTextChange: (String) -> Unit = {},
     loadingProgress: Float,
-) {/* TODO: Implement search bar */
-
+) {
     when {
-        homeUiState.pokemonList.isEmpty().not() -> {
-            ContentState(homeUiState, modifier, onPokemonClicked, onEndOfListReached)
+        uiState.pokemonList.isEmpty().not() -> {
+            var searchText by remember { mutableStateOf("") }
+
+            TextField(
+                value = searchText,
+                onValueChange = { newValue ->
+                    searchText = newValue // TODO: Maybe this should be in the viewmodel
+                    onSearchTextChange(newValue)
+                },
+                label = { Text("Search Pokemon") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 48.dp, start = 16.dp, end = 16.dp)
+            ) // TODO: Finish implementation
+
+            ContentState(
+                uiState = uiState,
+                modifier = modifier,
+                onPokemonClicked = onPokemonClicked,
+                onEndOfListReached = onEndOfListReached,
+            )
         }
 
-        homeUiState.isLoading -> Loading(currentProgressLoading = loadingProgress)
-        homeUiState.isError -> Error()
-        homeUiState.isEmpty -> Error()
+        uiState.isLoading -> Loading(currentProgressLoading = loadingProgress)
+        uiState.isError -> Error()
+        uiState.isEmpty -> Error()
     }
 }
 
 @Composable
 private fun ContentState(
-    homeUiState: HomeUiState,
+    uiState: HomeUiState,
     modifier: Modifier,
     onPokemonClicked: (String) -> Unit,
     onEndOfListReached: () -> Unit
 ) {
-    val pokemonList = homeUiState.pokemonList
+    val pokemonList = uiState.pokemonList
     val scrollState = rememberLazyGridState()
-
 
     Surface(color = Color.LightGray) {
         LazyVerticalGrid(
@@ -103,7 +125,7 @@ fun HomeScreenRoute(
     } // TODO: Maybe this should be in the viewmodel
 
     HomeScreen(
-        homeUiState = uiState,
+        uiState = uiState,
         modifier = modifier,
         onEndOfListReached = homeViewModel::getNextPage,
         onPokemonClicked = onPokemonClicked,

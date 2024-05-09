@@ -1,8 +1,8 @@
 package com.gabrielgrs1.pokedex.data.model
 
 import android.os.Parcelable
-import com.gabrielgrs1.pokedex.core.Constants.IMAGE_URL
-import com.gabrielgrs1.pokedex.core.getPokemonIndex
+import com.gabrielgrs1.pokedex.core.utils.Constants.IMAGE_URL
+import com.gabrielgrs1.pokedex.core.utils.getPokemonIndex
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize

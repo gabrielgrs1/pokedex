@@ -1,4 +1,4 @@
-package com.gabrielgrs1.pokedex.core
+package com.gabrielgrs1.pokedex.core.utils
 
 object Constants {
     const val POKEMON_ID_INDEX = 6

@@ -2,8 +2,8 @@ package com.gabrielgrs1.pokedex.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gabrielgrs1.pokedex.core.Constants.IMAGE_URL
-import com.gabrielgrs1.pokedex.core.getPokemonIndex
+import com.gabrielgrs1.pokedex.core.utils.Constants.IMAGE_URL
+import com.gabrielgrs1.pokedex.core.utils.getPokemonIndex
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 
 @Entity(tableName = "pokemon")

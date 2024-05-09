@@ -1,6 +1,6 @@
-package com.gabrielgrs1.pokedex.core
+package com.gabrielgrs1.pokedex.core.utils
 
-import com.gabrielgrs1.pokedex.core.Constants.POKEMON_ID_INDEX
+import com.gabrielgrs1.pokedex.core.utils.Constants.POKEMON_ID_INDEX
 import java.util.Locale
 
 fun String.getPokemonIndex() = this.split("/")[POKEMON_ID_INDEX]

@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.gabrielgrs1.pokedex.core.formatToUserFriendly
+import com.gabrielgrs1.pokedex.core.utils.formatToUserFriendly
 import com.gabrielgrs1.pokedex.presentation.components.Error
 import com.gabrielgrs1.pokedex.presentation.components.Loading
 import com.gabrielgrs1.pokedex.presentation.uistate.DetailsUiState

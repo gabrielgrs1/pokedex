@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.gabrielgrs1.pokedex.core.formatToUserFriendly
+import com.gabrielgrs1.pokedex.core.utils.formatToUserFriendly
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import kotlinx.coroutines.Dispatchers
 
@@ -65,7 +65,7 @@ fun PokemonListItem(
                 .padding(4.dp),
             text = pokemon.name.formatToUserFriendly(),
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.bodyLarge,
         )
     }
 }

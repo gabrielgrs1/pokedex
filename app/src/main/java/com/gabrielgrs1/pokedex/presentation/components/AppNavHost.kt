@@ -7,11 +7,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.gabrielgrs1.pokedex.core.Arguments
-import com.gabrielgrs1.pokedex.core.NavigationItem
+import com.gabrielgrs1.pokedex.core.utils.Arguments
+import com.gabrielgrs1.pokedex.core.utils.NavigationItem
 import com.gabrielgrs1.pokedex.core.di.detailsModule
 import com.gabrielgrs1.pokedex.core.di.homeModule
-import com.gabrielgrs1.pokedex.core.unformatPokemonName
+import com.gabrielgrs1.pokedex.core.utils.unformatPokemonName
 import com.gabrielgrs1.pokedex.presentation.screen.DetailsScreenRoute
 import com.gabrielgrs1.pokedex.presentation.screen.HomeScreenRoute
 import org.koin.core.context.loadKoinModules

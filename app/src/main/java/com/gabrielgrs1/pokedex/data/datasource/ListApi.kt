@@ -1,6 +1,6 @@
 package com.gabrielgrs1.pokedex.data.datasource
 
-import com.gabrielgrs1.pokedex.core.Constants
+import com.gabrielgrs1.pokedex.core.utils.Constants
 import com.gabrielgrs1.pokedex.data.model.PokemonResponse
 import com.gabrielgrs1.pokedex.data.model.PokemonSearchResponse
 import retrofit2.http.GET
