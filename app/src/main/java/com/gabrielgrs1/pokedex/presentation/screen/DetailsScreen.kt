@@ -28,11 +28,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.gabrielgrs1.pokedex.R
 import com.gabrielgrs1.pokedex.core.utils.formatToUserFriendly
 import com.gabrielgrs1.pokedex.presentation.components.Error
 import com.gabrielgrs1.pokedex.presentation.components.Loading
@@ -72,30 +74,35 @@ private fun ContentState(
         Surface(color = Color.LightGray, modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier
-                    .padding(top = 48.dp, start = 16.dp, end = 16.dp)
+                    .padding(top = 48.dp, start = 24.dp, end = 24.dp, bottom = 48.dp)
                     .verticalScroll(rememberScrollState())
             ) {
+                // Header
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Back Button
                     IconButton(onClick = { onBackPressed() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
+
+                    // Pokemon Name
                     Text(
                         modifier = Modifier.align(Alignment.CenterVertically),
                         text = pokemonDetail.name.formatToUserFriendly(),
                         style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
                         color = Color(0xFFE3350D)
                     )
+
+                    // Pokemon Id
                     Text(
                         text = "#${pokemonDetail.id}",
                         style = MaterialTheme.typography.headlineSmall,
                         color = Color.Blue
                     )
                 }
-
                 Spacer(modifier = Modifier.height(8.dp))
 
                 val imageRequest = ImageRequest.Builder(LocalContext.current)
@@ -107,16 +114,17 @@ private fun ContentState(
                     .memoryCachePolicy(CachePolicy.ENABLED)
                     .build()
 
+                // Pokemon Image
                 AsyncImage(
                     modifier = modifier.size(480.dp),
                     model = imageRequest,
                     contentDescription = "image at ${pokemon.name}",
                 )
-
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Weight
                 Text(
-                    text = "Weight",
+                    text = stringResource(id = R.string.weight_label),
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.Gray
                 )
@@ -125,11 +133,11 @@ private fun ContentState(
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color.Black
                 )
-
                 Spacer(modifier = Modifier.height(24.dp))
 
+                // Height
                 Text(
-                    text = "Height",
+                    text = stringResource(id = R.string.height_label),
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.Gray
                 )
@@ -138,11 +146,11 @@ private fun ContentState(
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color.Black
                 )
-
                 Spacer(modifier = Modifier.height(24.dp))
 
+                // Types
                 Text(
-                    text = "Types",
+                    text = stringResource(id = R.string.types_label),
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.Gray
                 )
@@ -152,11 +160,11 @@ private fun ContentState(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
-
                 Spacer(modifier = Modifier.height(24.dp))
 
+                // Stats
                 Text(
-                    text = "Stats",
+                    text = stringResource(id = R.string.stats_label),
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.Gray
                 )
@@ -166,11 +174,11 @@ private fun ContentState(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
-
                 Spacer(modifier = Modifier.height(24.dp))
 
+                // Abilities
                 Text(
-                    text = "Abilities",
+                    text = stringResource(id = R.string.abilities_label),
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.Gray
                 )
@@ -180,8 +188,6 @@ private fun ContentState(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
-
-                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
@@ -194,7 +200,6 @@ fun DetailsScreenRoute(
     detailsViewModel: DetailsViewModel = koinViewModel(),
     onBackPressed: () -> Unit = {}
 ) {
-
     val uiState by detailsViewModel.uiState.collectAsState()
 
     val currentProgress by remember {

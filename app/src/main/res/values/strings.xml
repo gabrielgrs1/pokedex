@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Pokedex</string>
     <string name="generic_error">An unexpected error occurred, please try again later!</string>
+
+    <!-- Home Screen start -->
+    <!-- Home Screen end -->
+
+    <!-- Detail Screen start-->
+    <string name="weight_label">Weight</string>
+    <string name="height_label">Height</string>
+    <string name="types_label">Types</string>
+    <string name="stats_label">Stats</string>
+    <string name="abilities_label">Abilities</string>
+    <!-- Detail Screen end-->
 </resources>

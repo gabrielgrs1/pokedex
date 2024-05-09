@@ -43,19 +43,20 @@ fun HomeScreen(
 ) {
     when {
         uiState.pokemonList.isEmpty().not() -> {
-            var searchText by remember { mutableStateOf("") }
+            var searchText by remember { mutableStateOf("") } // TODO: Maybe this should be in the viewmodel
 
+            // Search text
             TextField(
                 value = searchText,
                 onValueChange = { newValue ->
-                    searchText = newValue // TODO: Maybe this should be in the viewmodel
+                    searchText = newValue
                     onSearchTextChange(newValue)
                 },
                 label = { Text("Search Pokemon") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 48.dp, start = 16.dp, end = 16.dp)
-            ) // TODO: Finish implementation
+            ) // TODO: Fix implementation
 
             ContentState(
                 uiState = uiState,
