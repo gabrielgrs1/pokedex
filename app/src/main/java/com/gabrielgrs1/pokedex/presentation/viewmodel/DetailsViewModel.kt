@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
 import com.gabrielgrs1.pokedex.domain.repository.DetailsRepository
 import com.gabrielgrs1.pokedex.presentation.uistate.DetailsUiState
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +18,7 @@ import retrofit2.HttpException
 class DetailsViewModel(
     private val detailsRepository: DetailsRepository,
     private val dao: PokemonDao,
-    private val coroutineContext: CoroutineDispatcher = Dispatchers.IO,
+    private val coroutineContext: CoroutineContext = Dispatchers.IO + SupervisorJob(),
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<DetailsUiState> =

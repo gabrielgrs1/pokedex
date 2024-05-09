@@ -2,8 +2,8 @@ package com.gabrielgrs1.pokedex.core.di
 
 import androidx.room.Room
 import com.gabrielgrs1.pokedex.BuildConfig
-import com.gabrielgrs1.pokedex.core.utils.Constants
 import com.gabrielgrs1.pokedex.core.db.AppDataBase
+import com.gabrielgrs1.pokedex.core.utils.Constants
 import com.gabrielgrs1.pokedex.data.datasource.DetailsApi
 import com.gabrielgrs1.pokedex.data.datasource.ListApi
 import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
@@ -64,14 +64,21 @@ val homeModule = module {
 
     single<ListRepository> { ListRepositoryImpl(api = get()) }
 
+
     factory {
         ListUseCase(
             listRepository = get(),
-            dao = get()
-        )
+            dao = get(),
+
+            )
     }
 
-    viewModel { HomeViewModel(get(), get()) }
+    viewModel {
+        HomeViewModel(
+            listUseCase = get(),
+            listRepository = get()
+        )
+    }
 }
 
 fun provideDao(postDataBase: AppDataBase): PokemonDao = postDataBase.pokemonDao()

@@ -1,5 +1,6 @@
 package com.gabrielgrs1.pokedex
 
+import com.gabrielgrs1.pokedex.core.di.dataBaseModule
 import com.gabrielgrs1.pokedex.core.di.detailsModule
 import com.gabrielgrs1.pokedex.core.di.homeModule
 import com.gabrielgrs1.pokedex.core.di.networkConfigurationModule
@@ -13,6 +14,7 @@ class CheckModulesTest : KoinTest {
 
     @Test
     fun checkAllModules() {
+        dataBaseModule.verify()
         homeModule.verify()
         detailsModule.verify()
         networkConfigurationModule.verify()

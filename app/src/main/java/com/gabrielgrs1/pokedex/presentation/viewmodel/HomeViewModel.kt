@@ -8,8 +8,9 @@ import com.gabrielgrs1.pokedex.domain.repository.ListRepository
 import com.gabrielgrs1.pokedex.domain.usecase.ListUseCase
 import com.gabrielgrs1.pokedex.presentation.uistate.HomeUiState
 import java.net.HttpURLConnection
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +20,7 @@ import retrofit2.HttpException
 class HomeViewModel(
     private val listUseCase: ListUseCase,
     private val listRepository: ListRepository,
-    private val coroutineContext: CoroutineDispatcher = Dispatchers.IO,
+    private val coroutineContext: CoroutineContext = Dispatchers.IO + SupervisorJob(),
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<HomeUiState> =

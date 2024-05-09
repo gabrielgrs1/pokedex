@@ -26,8 +26,8 @@ class PokedexApplication : Application() {
 
             modules(
                 networkConfigurationModule,
-                homeModule,
-                dataBaseModule
+                dataBaseModule,
+                homeModule
             )
         }
     }
