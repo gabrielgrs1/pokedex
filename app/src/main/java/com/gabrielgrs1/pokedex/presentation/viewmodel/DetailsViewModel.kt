@@ -29,14 +29,14 @@ class DetailsViewModel(
                 val pokemonDetail = detailsRepository.getDetail(name)
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    content = pokemonDetail,
+                    pokemon = pokemonDetail,
                     isError = false
                 )
             } catch (exception: HttpException) {
                 exception.printStackTrace()
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    content = null,
+                    pokemon = null,
                     isError = true
                 )
             }

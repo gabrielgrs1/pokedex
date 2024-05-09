@@ -7,9 +7,10 @@ object Constants {
 
     const val DATABASE_NAME = "pokedex_database"
 
-    object API {
+    object ROUTES {
         const val INFIX_URL = "api/v2/"
 
         const val ROUTE_LIST = "pokemon/"
+        const val ROUTE_DETAILS = "pokemon/{name}"
     }
 }

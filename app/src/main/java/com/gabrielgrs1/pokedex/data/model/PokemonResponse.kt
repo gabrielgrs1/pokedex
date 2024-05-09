@@ -2,7 +2,6 @@ package com.gabrielgrs1.pokedex.data.model
 
 import android.os.Parcelable
 import com.gabrielgrs1.pokedex.core.Constants.IMAGE_URL
-import com.gabrielgrs1.pokedex.core.formatPokemonName
 import com.gabrielgrs1.pokedex.core.getPokemonIndex
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import com.google.gson.annotations.SerializedName
@@ -26,7 +25,7 @@ fun PokemonResult.toDomain(): Pokemon {
     val index = this.url?.getPokemonIndex()
 
     return Pokemon(
-        name = this.name.orEmpty().formatPokemonName(),
+        name = this.name.orEmpty(),
         imageUrl = if (index.isNullOrEmpty().not()) "$IMAGE_URL$index.png"
         else ""
     )

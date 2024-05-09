@@ -3,7 +3,6 @@ package com.gabrielgrs1.pokedex.data.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.gabrielgrs1.pokedex.core.Constants.IMAGE_URL
-import com.gabrielgrs1.pokedex.core.formatPokemonName
 import com.gabrielgrs1.pokedex.core.getPokemonIndex
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 
@@ -16,6 +15,6 @@ data class PokemonEntity(
 )
 
 fun PokemonEntity?.toDomain() = Pokemon(
-    name = this?.name.orEmpty().formatPokemonName(),
+    name = this?.name.orEmpty(),
     imageUrl = if (this == null) "" else "$IMAGE_URL${this.url.getPokemonIndex()}.png"
 )

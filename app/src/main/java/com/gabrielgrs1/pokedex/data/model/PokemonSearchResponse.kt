@@ -1,7 +1,6 @@
 package com.gabrielgrs1.pokedex.data.model
 
 import android.os.Parcelable
-import com.gabrielgrs1.pokedex.core.formatPokemonName
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -34,6 +33,6 @@ data class PokemonSearchResponse(
 
 
 fun PokemonSearchResponse.toDomain() = Pokemon(
-    name = name.orEmpty().formatPokemonName(),
+    name = name.orEmpty(),
     imageUrl = getImageUrl(),
 )

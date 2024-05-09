@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface DetailsApi {
 
-    @GET("${Constants.API.INFIX_URL}${Constants.API.ROUTE_LIST}{name}")
+    @GET("${Constants.ROUTES.INFIX_URL}${Constants.ROUTES.ROUTE_DETAILS}")
     suspend fun getDetail(
         @Path("name") name: String
     ): PokemonDetailResponse

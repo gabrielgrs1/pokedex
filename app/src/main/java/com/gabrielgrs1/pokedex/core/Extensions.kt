@@ -5,6 +5,10 @@ import java.util.Locale
 
 fun String.getPokemonIndex() = this.split("/")[POKEMON_ID_INDEX]
 
-fun String.formatPokemonName() = this
+fun String.formatToUserFriendly() = this
     .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
     .replace("-", " ")
+
+fun String.unformatPokemonName() = this
+    .replaceFirstChar { if (it.isUpperCase()) it.lowercase(Locale.getDefault()) else it.toString() }
+    .replace(" ", "-")
