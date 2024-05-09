@@ -47,6 +47,16 @@ class DetailsViewModel(
         viewModelScope.launch(coroutineContext) {
             try {
                 dao.favoritePokemon(name, isFavorite)
+                val pokemonDetail = _uiState.value.pokemon
+                pokemonDetail?.let {
+                    it.isFavorite = isFavorite
+
+                    _uiState.value = _uiState.value.copy(
+                        isLoading = false,
+                        pokemon = it,
+                        isError = false
+                    )
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

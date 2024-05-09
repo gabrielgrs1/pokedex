@@ -1,7 +1,6 @@
 package com.gabrielgrs1.pokedex.domain.model
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -13,5 +12,6 @@ data class PokemonDetail(
     val types: List<String>,
     val stats: List<String>,
     val abilities: List<String>,
-    val imageUrl: String
+    val imageUrl: String,
+    var isFavorite: Boolean = false
 ) : Parcelable
