@@ -37,6 +37,8 @@ class HomeViewModel(
 
     private var page = INITIAL_PAGE
     private var searchJob: Job? = null
+    private var isSearchListing =
+        false // This variable is used as a temporary fix to avoid the auto increment page when start app
 
     init {
         listPokemons()
@@ -49,8 +51,10 @@ class HomeViewModel(
                 .debounce(DELAY_BETWEEN_SEARCHES)
                 .collectLatest { query ->
                     if (query.length >= MIN_POKEMON_NAME_SIZE) {
+                        isSearchListing = true
                         searchPokemon(query)
                     } else if (query.isEmpty()) {
+                        isSearchListing = false
                         page = INITIAL_PAGE
                         _uiState.value = HomeUiState()
                         listPokemons()
