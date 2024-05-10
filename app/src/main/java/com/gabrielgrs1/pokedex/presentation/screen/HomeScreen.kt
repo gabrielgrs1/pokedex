@@ -36,7 +36,6 @@ fun HomeScreen(
     onEndOfListReached: () -> Unit = {},
     onPokemonClicked: (String) -> Unit = {},
     onSearchTextChange: (String) -> Unit = {},
-    loadingProgress: Float,
     searchText: String,
 ) {
     Box(
@@ -67,7 +66,7 @@ fun HomeScreen(
                 )
             }
 
-            uiState.isLoading -> Loading(currentProgressLoading = loadingProgress)
+            uiState.isLoading -> Loading()
             uiState.isError -> Error()
             uiState.isEmpty -> EmptySearch()
         }
@@ -123,10 +122,6 @@ fun HomeScreenRoute(
     val uiState by homeViewModel.uiState.collectAsState()
     val searchQuery by homeViewModel.searchQuery.collectAsState()
 
-    val currentProgress by remember {
-        mutableFloatStateOf(2f)
-    } // TODO: Maybe this should be in the viewmodel
-
     HomeScreen(
         uiState = uiState,
         modifier = modifier
@@ -135,7 +130,6 @@ fun HomeScreenRoute(
         onEndOfListReached = homeViewModel::getNextPage,
         onPokemonClicked = onPokemonClicked,
         onSearchTextChange = homeViewModel::searchPokemon,
-        loadingProgress = currentProgress,
         searchText = searchQuery
     )
 }

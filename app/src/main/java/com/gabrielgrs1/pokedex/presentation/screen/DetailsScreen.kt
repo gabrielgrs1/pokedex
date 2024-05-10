@@ -49,14 +49,13 @@ fun DetailsScreen(
     modifier: Modifier = Modifier,
     uiState: DetailsUiState,
     onBackPressed: () -> Unit = {},
-    loadingProgress: Float,
 ) {
     when {
         uiState.pokemon != null -> {
             ContentState(uiState, modifier, onBackPressed)
         }
 
-        uiState.isLoading -> Loading(currentProgressLoading = loadingProgress)
+        uiState.isLoading -> Loading()
         uiState.isError -> Error()
     }
 }
@@ -202,18 +201,13 @@ fun DetailsScreenRoute(
 ) {
     val uiState by detailsViewModel.uiState.collectAsState()
 
-    val currentProgress by remember {
-        mutableFloatStateOf(2f)
-    } // TODO: Maybe this should be in the viewmodel
-
     LaunchedEffect(Unit) {
         detailsViewModel.getPokemon(pokemonName)
     }
 
     DetailsScreen(
-        uiState = uiState,
         modifier = modifier,
-        onBackPressed = onBackPressed,
-        loadingProgress = currentProgress
+        uiState = uiState,
+        onBackPressed = onBackPressed
     )
 }
