@@ -1,8 +1,8 @@
 package com.gabrielgrs1.pokedex.domain.repository
 
-import com.gabrielgrs1.pokedex.domain.model.PokemonDetail
+import com.gabrielgrs1.pokedex.data.model.PokemonDetailResponse
 
 interface DetailsRepository {
 
-    suspend fun getDetail(name: String): PokemonDetail
+    suspend fun getPokemonDetailByName(name: String): PokemonDetailResponse
 }

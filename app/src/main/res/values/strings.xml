@@ -3,6 +3,7 @@
     <string name="generic_error">An unexpected error occurred, please try again later!</string>
 
     <!-- Home Screen start -->
+    <string name="search_hint">Search pokemon</string>
     <!-- Home Screen end -->
 
     <!-- Detail Screen start-->

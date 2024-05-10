@@ -1,6 +1,7 @@
 package com.gabrielgrs1.pokedex.data.model
 
 import android.os.Parcelable
+import com.gabrielgrs1.pokedex.core.utils.Constants.INVALID_ID
 import com.gabrielgrs1.pokedex.domain.model.PokemonDetail
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -76,7 +77,6 @@ data class PokemonDetailResponse(
 }
 
 
-const val INVALID_ID = -1
 
 fun PokemonDetailResponse.toDomain() = PokemonDetail(
     id = id ?: INVALID_ID,
@@ -87,4 +87,16 @@ fun PokemonDetailResponse.toDomain() = PokemonDetail(
     abilities = getAbilities(),
     weight = weight.toString(),
     height = height.orEmpty()
+)
+
+fun PokemonDetailResponse.toEntity() = PokemonDetailEntity(
+    id = id ?: INVALID_ID,
+    name = name.orEmpty(),
+    imageUrl = getImageUrl(),
+    stats = getStats(),
+    types = getTypes(),
+    abilities = getAbilities(),
+    weight = weight.toString(),
+    height = height.orEmpty(),
+    isFavorite = false
 )

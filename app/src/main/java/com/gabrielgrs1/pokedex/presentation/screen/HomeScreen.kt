@@ -17,12 +17,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.gabrielgrs1.pokedex.R
 import com.gabrielgrs1.pokedex.presentation.components.EmptySearch
-import com.gabrielgrs1.pokedex.presentation.components.Error
+import com.gabrielgrs1.pokedex.presentation.components.ErrorView
 import com.gabrielgrs1.pokedex.presentation.components.Loading
 import com.gabrielgrs1.pokedex.presentation.components.PokemonListItem
 import com.gabrielgrs1.pokedex.presentation.uistate.HomeUiState
@@ -38,6 +39,8 @@ fun HomeScreen(
     onSearchTextChange: (String) -> Unit = {},
     searchText: String,
 ) {
+    val errorMessage = if (uiState.errorMessage.isEmpty().not()) uiState.errorMessage else null
+
     Box(
         modifier = modifier
             .padding(top = 16.dp)
@@ -49,7 +52,7 @@ fun HomeScreen(
             onValueChange = { newValue ->
                 onSearchTextChange(newValue)
             },
-            label = { Text("Search Pokemon") },
+            label = { Text(stringResource(id = R.string.search_hint)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp)
@@ -67,7 +70,7 @@ fun HomeScreen(
             }
 
             uiState.isLoading -> Loading()
-            uiState.isError -> Error()
+            uiState.isError -> ErrorView(errorMessage)
             uiState.isEmpty -> EmptySearch()
         }
     }

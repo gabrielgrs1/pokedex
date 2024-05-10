@@ -3,7 +3,7 @@ package com.gabrielgrs1.pokedex.usecase
 import app.cash.turbine.test
 import com.gabrielgrs1.pokedex.MainDispatcherRule
 import com.gabrielgrs1.pokedex.core.platform.UseCaseResult
-import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
+import com.gabrielgrs1.pokedex.data.datasource.list.PokemonListDao
 import com.gabrielgrs1.pokedex.data.model.PokemonEntity
 import com.gabrielgrs1.pokedex.data.model.PokemonResponse
 import com.gabrielgrs1.pokedex.data.model.PokemonResult
@@ -23,7 +23,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class ListUsecaseTest {
     private val listRepository: ListRepository = mockk(relaxed = true)
-    private val dao: PokemonDao = mockk(relaxed = true)
+    private val dao: PokemonListDao = mockk(relaxed = true)
     private lateinit var listUseCase: ListUseCase
 
     @get:Rule

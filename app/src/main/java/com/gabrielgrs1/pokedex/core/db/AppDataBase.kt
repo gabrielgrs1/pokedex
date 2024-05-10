@@ -2,10 +2,16 @@ package com.gabrielgrs1.pokedex.core.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
+import androidx.room.TypeConverters
+import com.gabrielgrs1.pokedex.data.datasource.detail.PokemonDetailDao
+import com.gabrielgrs1.pokedex.data.datasource.list.PokemonListDao
+import com.gabrielgrs1.pokedex.data.model.PokemonDetailEntity
 import com.gabrielgrs1.pokedex.data.model.PokemonEntity
+import com.gabrielgrs1.pokedex.domain.converters.ListStringConverter
 
-@Database(entities = [(PokemonEntity::class)], version = 2)
+@Database(entities = [(PokemonEntity::class), (PokemonDetailEntity::class)], version = 1)
+@TypeConverters(ListStringConverter::class)
 abstract class AppDataBase : RoomDatabase() {
-    abstract fun pokemonDao() : PokemonDao
+    abstract fun pokemonListDao(): PokemonListDao
+    abstract fun pokemonDetailDao(): PokemonDetailDao
 }

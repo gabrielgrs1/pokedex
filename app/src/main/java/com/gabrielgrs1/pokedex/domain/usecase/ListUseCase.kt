@@ -1,7 +1,7 @@
 package com.gabrielgrs1.pokedex.domain.usecase
 
 import com.gabrielgrs1.pokedex.core.platform.UseCaseResult
-import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
+import com.gabrielgrs1.pokedex.data.datasource.list.PokemonListDao
 import com.gabrielgrs1.pokedex.data.model.PokemonEntity
 import com.gabrielgrs1.pokedex.data.model.toDomain
 import com.gabrielgrs1.pokedex.data.model.toEntity
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.flowOn
 
 open class ListUseCase(
     private val listRepository: ListRepository,
-    private val dao: PokemonDao,
+    private val dao: PokemonListDao,
     private val dispatcher: CoroutineContext = Dispatchers.IO
 ) {
     suspend operator fun invoke(page: Int): Flow<UseCaseResult<List<Pokemon>>> = flow {

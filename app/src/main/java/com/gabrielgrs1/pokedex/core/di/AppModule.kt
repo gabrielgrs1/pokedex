@@ -4,13 +4,13 @@ import androidx.room.Room
 import com.gabrielgrs1.pokedex.BuildConfig
 import com.gabrielgrs1.pokedex.core.db.AppDataBase
 import com.gabrielgrs1.pokedex.core.utils.Constants
-import com.gabrielgrs1.pokedex.data.datasource.DetailsApi
-import com.gabrielgrs1.pokedex.data.datasource.ListApi
-import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
+import com.gabrielgrs1.pokedex.data.datasource.detail.DetailsApi
+import com.gabrielgrs1.pokedex.data.datasource.list.ListApi
 import com.gabrielgrs1.pokedex.data.repository.DetailsRepositoryImpl
 import com.gabrielgrs1.pokedex.data.repository.ListRepositoryImpl
 import com.gabrielgrs1.pokedex.domain.repository.DetailsRepository
 import com.gabrielgrs1.pokedex.domain.repository.ListRepository
+import com.gabrielgrs1.pokedex.domain.usecase.DetailsUseCase
 import com.gabrielgrs1.pokedex.domain.usecase.ListUseCase
 import com.gabrielgrs1.pokedex.presentation.viewmodel.DetailsViewModel
 import com.gabrielgrs1.pokedex.presentation.viewmodel.HomeViewModel
@@ -54,23 +54,32 @@ val networkConfigurationModule = module {
 
 val detailsModule = module {
     single { get<Retrofit>().create(DetailsApi::class.java) }
+    single { get<AppDataBase>().pokemonDetailDao() }
     single<DetailsRepository> { DetailsRepositoryImpl(get()) }
 
-    viewModel { DetailsViewModel(detailsRepository = get(), dao = get()) }
+    factory {
+        DetailsUseCase(
+            detailsRepository = get(),
+            dao = get(),
+        )
+    }
+
+    viewModel { DetailsViewModel(
+        detailsUseCase = get(),
+        dao = get()
+    ) }
 }
 
 val homeModule = module {
     single { get<Retrofit>().create(ListApi::class.java) }
-
+    single { get<AppDataBase>().pokemonListDao() }
     single<ListRepository> { ListRepositoryImpl(api = get()) }
-
 
     factory {
         ListUseCase(
             listRepository = get(),
             dao = get(),
-
-            )
+        )
     }
 
     viewModel {
@@ -81,8 +90,6 @@ val homeModule = module {
     }
 }
 
-fun provideDao(postDataBase: AppDataBase): PokemonDao = postDataBase.pokemonDao()
-
 val dataBaseModule = module {
     single {
         Room.databaseBuilder(
@@ -90,5 +97,4 @@ val dataBaseModule = module {
             AppDataBase::class.java, Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration().build()
     }
-    single { provideDao(get()) }
 }

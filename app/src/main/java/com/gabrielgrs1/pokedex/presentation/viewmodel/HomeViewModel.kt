@@ -72,7 +72,8 @@ class HomeViewModel(
                             pokemonList = emptyList(),
                             isLoading = false,
                             isError = true,
-                            isEmpty = false
+                            isEmpty = false,
+                            errorMessage = ""
                         )
                     }
 
@@ -83,7 +84,8 @@ class HomeViewModel(
                             pokemonList = newList,
                             isLoading = false,
                             isError = false,
-                            isEmpty = false
+                            isEmpty = false,
+                            errorMessage = ""
                         )
                     }
                 }
@@ -104,6 +106,7 @@ class HomeViewModel(
                     isError = false,
                     isLoading = false,
                     isEmpty = false,
+                    errorMessage = ""
                 )
             } catch (e: HttpException) {
                 e.printStackTrace()
@@ -113,6 +116,7 @@ class HomeViewModel(
                         isError = false,
                         isLoading = false,
                         isEmpty = true,
+                        errorMessage = e.message()
                     )
                 } else {
                     _uiState.value = _uiState.value.copy(
@@ -120,6 +124,7 @@ class HomeViewModel(
                         isError = true,
                         isLoading = false,
                         isEmpty = false,
+                        errorMessage = e.message()
                     )
                 }
             }

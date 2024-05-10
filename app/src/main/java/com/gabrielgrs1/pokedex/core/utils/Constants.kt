@@ -6,6 +6,7 @@ object Constants {
         "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
 
     const val DATABASE_NAME = "pokedex_database"
+    const val INVALID_ID = -1
 
     object ROUTES {
         const val INFIX_URL = "api/v2/"

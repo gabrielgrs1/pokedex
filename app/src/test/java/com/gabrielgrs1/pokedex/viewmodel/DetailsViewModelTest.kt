@@ -1,7 +1,7 @@
 package com.gabrielgrs1.pokedex.viewmodel
 
 import com.gabrielgrs1.pokedex.MainDispatcherRule
-import com.gabrielgrs1.pokedex.data.datasource.PokemonDao
+import com.gabrielgrs1.pokedex.data.datasource.list.PokemonListDao
 import com.gabrielgrs1.pokedex.domain.model.PokemonDetail
 import com.gabrielgrs1.pokedex.domain.repository.DetailsRepository
 import com.gabrielgrs1.pokedex.presentation.uistate.DetailsUiState
@@ -24,7 +24,7 @@ import retrofit2.Response
 @OptIn(ExperimentalCoroutinesApi::class)
 class DetailsViewModelTest {
     private val detailsRepository: DetailsRepository = mockk(relaxed = true)
-    private val dao: PokemonDao = mockk(relaxed = true)
+    private val dao: PokemonListDao = mockk(relaxed = true)
     private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var stateValue: DetailsUiState
 
@@ -61,7 +61,7 @@ class DetailsViewModelTest {
                 "",
             )
 
-            coEvery { detailsRepository.getDetail("pikachu") } returns pokemonDetail
+            coEvery { detailsRepository.getPokemonDetailByName("pikachu") } returns pokemonDetail
 
             // When
             detailsViewModel.getPokemon("pikachu")
@@ -78,7 +78,7 @@ class DetailsViewModelTest {
     fun `when getPokemon was called given returns fails then updates uiState with error`() =
         runTest {
             // Given
-            coEvery { detailsRepository.getDetail(any()) } throws HttpException(
+            coEvery { detailsRepository.getPokemonDetailByName(any()) } throws HttpException(
                 Response.error<Any>(
                     HttpURLConnection.HTTP_INTERNAL_ERROR,
                     ResponseBody.create(null, "")

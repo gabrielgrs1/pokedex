@@ -5,5 +5,6 @@ import com.gabrielgrs1.pokedex.domain.model.PokemonDetail
 data class DetailsUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
+    val errorMessage: String = "",
     val pokemon: PokemonDetail? = null,
 )

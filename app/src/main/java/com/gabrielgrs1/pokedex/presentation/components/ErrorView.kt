@@ -22,8 +22,8 @@ import com.gabrielgrs1.pokedex.R
 
 
 @Composable
-fun Error(
-    errorMessage: String = stringResource(id = R.string.generic_error)
+fun ErrorView(
+    errorMessage: String? = stringResource(id = R.string.generic_error)
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -37,7 +37,7 @@ fun Error(
             modifier = Modifier.size(48.dp)
         )
         Text(
-            text = errorMessage,
+            text = errorMessage.orEmpty(),
             color = Color.Black,
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center,
@@ -48,6 +48,6 @@ fun Error(
 
 @Preview(showBackground = true)
 @Composable
-private fun ErrorPrev() {
-    Error()
+private fun ErrorViewPrev() {
+    ErrorView()
 }

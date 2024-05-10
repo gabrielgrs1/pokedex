@@ -13,6 +13,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,8 +24,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,7 +36,7 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.gabrielgrs1.pokedex.R
 import com.gabrielgrs1.pokedex.core.utils.formatToUserFriendly
-import com.gabrielgrs1.pokedex.presentation.components.Error
+import com.gabrielgrs1.pokedex.presentation.components.ErrorView
 import com.gabrielgrs1.pokedex.presentation.components.Loading
 import com.gabrielgrs1.pokedex.presentation.uistate.DetailsUiState
 import com.gabrielgrs1.pokedex.presentation.viewmodel.DetailsViewModel
@@ -49,14 +49,21 @@ fun DetailsScreen(
     modifier: Modifier = Modifier,
     uiState: DetailsUiState,
     onBackPressed: () -> Unit = {},
+    onFavoritePressed: (Boolean) -> Unit = {},
 ) {
+    val errorMessage = if (uiState.errorMessage.isEmpty().not()) uiState.errorMessage else null
     when {
         uiState.pokemon != null -> {
-            ContentState(uiState, modifier, onBackPressed)
+            ContentState(
+                uiState = uiState,
+                modifier = modifier,
+                onBackPressed = onBackPressed,
+                onFavoritePressed = onFavoritePressed
+            )
         }
 
         uiState.isLoading -> Loading()
-        uiState.isError -> Error()
+        uiState.isError -> ErrorView(errorMessage)
     }
 }
 
@@ -66,6 +73,7 @@ private fun ContentState(
     uiState: DetailsUiState,
     modifier: Modifier,
     onBackPressed: () -> Unit = {},
+    onFavoritePressed: (Boolean) -> Unit = {},
 ) {
     val pokemon = uiState.pokemon
 
@@ -103,6 +111,32 @@ private fun ContentState(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
+
+                // Favorite Button
+                IconButton(
+                    modifier = Modifier
+                        .align(Alignment.End),
+                    onClick = { onFavoritePressed(uiState.pokemon.isFavorite.not()) }) {
+                    val favoriteIcon = if (uiState.pokemon.isFavorite) {
+                        Icons.Default.Favorite
+                    } else {
+                        Icons.Default.FavoriteBorder
+                    }
+
+                    val tint = if (uiState.pokemon.isFavorite) {
+                        Color.Red
+                    } else {
+                        Color.Gray
+                    }
+
+                    Icon(
+                        modifier = Modifier
+                            .size(36.dp),
+                        imageVector = favoriteIcon,
+                        contentDescription = "Favorite",
+                        tint = tint
+                    )
+                }
 
                 val imageRequest = ImageRequest.Builder(LocalContext.current)
                     .data(pokemon.imageUrl)
@@ -208,6 +242,12 @@ fun DetailsScreenRoute(
     DetailsScreen(
         modifier = modifier,
         uiState = uiState,
-        onBackPressed = onBackPressed
+        onBackPressed = onBackPressed,
+        onFavoritePressed = {
+            detailsViewModel.favoritePokemon(
+                name = pokemonName,
+                isFavorite = it
+            )
+        }
     )
 }

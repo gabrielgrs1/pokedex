@@ -1,6 +1,6 @@
 package com.gabrielgrs1.pokedex.data.repository
 
-import com.gabrielgrs1.pokedex.data.datasource.ListApi
+import com.gabrielgrs1.pokedex.data.datasource.list.ListApi
 import com.gabrielgrs1.pokedex.data.model.PokemonResponse
 import com.gabrielgrs1.pokedex.data.model.PokemonSearchResponse
 import com.gabrielgrs1.pokedex.domain.repository.ListRepository

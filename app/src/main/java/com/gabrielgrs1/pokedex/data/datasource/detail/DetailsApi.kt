@@ -1,4 +1,4 @@
-package com.gabrielgrs1.pokedex.data.datasource
+package com.gabrielgrs1.pokedex.data.datasource.detail
 
 import com.gabrielgrs1.pokedex.core.utils.Constants
 import com.gabrielgrs1.pokedex.data.model.PokemonDetailResponse
