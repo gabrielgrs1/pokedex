@@ -8,9 +8,7 @@ import com.gabrielgrs1.pokedex.data.model.toEntity
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import com.gabrielgrs1.pokedex.domain.repository.ListRepository
 import kotlin.coroutines.CoroutineContext
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

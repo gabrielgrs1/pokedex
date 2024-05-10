@@ -10,13 +10,18 @@ import com.gabrielgrs1.pokedex.presentation.uistate.HomeUiState
 import java.net.HttpURLConnection
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 
+@OptIn(FlowPreview::class)
 class HomeViewModel(
     private val listUseCase: ListUseCase,
     private val listRepository: ListRepository,
@@ -27,10 +32,31 @@ class HomeViewModel(
         MutableStateFlow(HomeUiState(isLoading = true))
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
+
     private var page = INITIAL_PAGE
+    private var searchJob: Job? = null
 
     init {
         listPokemons()
+        listenerSearchText()
+    }
+
+    private fun listenerSearchText() {
+        viewModelScope.launch {
+            searchQuery
+                .debounce(DELAY_BETWEEN_SEARCHES)
+                .collectLatest { query ->
+                    if (query.length >= MIN_POKEMON_NAME_SIZE) {
+                        searchPokemon(query)
+                    } else if (query.isEmpty()) {
+                        page = INITIAL_PAGE
+                        _uiState.value = HomeUiState()
+                        listPokemons()
+                    }
+                }
+        }
     }
 
     fun listPokemons() {
@@ -62,32 +88,34 @@ class HomeViewModel(
     }
 
     fun searchPokemon(name: String) {
-        viewModelScope.launch(coroutineContext) {
+        _searchQuery.value = name
+
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch(coroutineContext) {
             try {
-                _uiState.value = HomeUiState(isLoading = true)
                 val result = listRepository.searchPokemon(name)
 
                 _uiState.value = _uiState.value.copy(
-                    isLoading = false,
                     pokemonList = listOf(result.toDomain()),
                     isError = false,
-                    isEmpty = false
+                    isLoading = false,
+                    isEmpty = false,
                 )
             } catch (e: HttpException) {
                 e.printStackTrace()
                 if (e.code() == HttpURLConnection.HTTP_NOT_FOUND) {
                     _uiState.value = _uiState.value.copy(
-                        isLoading = false,
                         pokemonList = emptyList(),
                         isError = false,
-                        isEmpty = true
+                        isLoading = false,
+                        isEmpty = true,
                     )
                 } else {
                     _uiState.value = _uiState.value.copy(
-                        isLoading = false,
                         pokemonList = emptyList(),
                         isError = true,
-                        isEmpty = false
+                        isLoading = false,
+                        isEmpty = false,
                     )
                 }
             }
@@ -101,5 +129,7 @@ class HomeViewModel(
 
     companion object {
         const val INITIAL_PAGE = 0
+        private const val DELAY_BETWEEN_SEARCHES = 500L
+        private const val MIN_POKEMON_NAME_SIZE = 3
     }
 }

@@ -16,7 +16,7 @@ interface ListApi {
     ): PokemonResponse
 
 
-    @GET("${Constants.ROUTES.INFIX_URL}${Constants.ROUTES.ROUTE_LIST}")
+    @GET("${Constants.ROUTES.INFIX_URL}${Constants.ROUTES.ROUTE_DETAILS}")
     suspend fun searchPokemon(
         @Path("name") name: String
     ): PokemonSearchResponse
