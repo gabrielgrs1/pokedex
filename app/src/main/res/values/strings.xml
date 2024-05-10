@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Pokedex</string>
+
     <string name="generic_error">An unexpected error occurred, please try again later!</string>
+    <string name="empty_search">\"Unfortunately no results were found, try searching for the pokemon\'s full name\"</string>
 
     <!-- Home Screen start -->
     <string name="search_hint">Search pokemon</string>

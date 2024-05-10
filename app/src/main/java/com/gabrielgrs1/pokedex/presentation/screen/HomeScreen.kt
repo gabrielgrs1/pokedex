@@ -43,7 +43,6 @@ fun HomeScreen(
 
     Box(
         modifier = modifier
-            .padding(top = 16.dp)
     ) {
 
         // Search text
@@ -55,14 +54,14 @@ fun HomeScreen(
             label = { Text(stringResource(id = R.string.search_hint)) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
+                .padding(start = 24.dp, end = 24.dp)
         )
 
         when {
             uiState.pokemonList.isEmpty().not() -> {
                 ContentState(
                     uiState = uiState,
-                    modifier = modifier.padding(top = 8.dp),
+                    modifier = modifier,
                     onPokemonClicked = onPokemonClicked,
                     onEndOfListReached = onEndOfListReached,
                     isNotSearch = searchText.isEmpty()
@@ -92,7 +91,7 @@ private fun ContentState(
         state = scrollState,
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = 32.dp)
+            .padding(top = 24.dp)
     ) {
         items(pokemonList) { pokemon ->
             Box(

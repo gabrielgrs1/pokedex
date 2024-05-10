@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
@@ -92,7 +93,14 @@ private fun ContentState(
                 ) {
                     // Back Button
                     IconButton(onClick = { onBackPressed() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color(0xFF005800),
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .size(36.dp)
+                        )
                     }
 
                     // Pokemon Name
@@ -100,14 +108,15 @@ private fun ContentState(
                         modifier = Modifier.align(Alignment.CenterVertically),
                         text = pokemonDetail.name.formatToUserFriendly(),
                         style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
-                        color = Color(0xFFE3350D)
+                        color = Color(0xFF005800)
                     )
 
                     // Pokemon Id
                     Text(
                         text = "#${pokemonDetail.id}",
                         style = MaterialTheme.typography.headlineSmall,
-                        color = Color.Blue
+                        color = Color(0xFF005800),
+                        modifier = Modifier.align(Alignment.CenterVertically)
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -126,7 +135,7 @@ private fun ContentState(
                     val tint = if (uiState.pokemon.isFavorite) {
                         Color.Red
                     } else {
-                        Color.Gray
+                        Color(0xFF005800)
                     }
 
                     Icon(
@@ -155,71 +164,110 @@ private fun ContentState(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Weight
-                Text(
-                    text = stringResource(id = R.string.weight_label),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "${pokemonDetail.weight} kg",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Black
-                )
-                Spacer(modifier = Modifier.height(24.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, end = 12.dp, bottom = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
 
-                // Height
-                Text(
-                    text = stringResource(id = R.string.height_label),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.Gray
-                )
-                Text(
-                    text = "${pokemonDetail.height} M",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Black
-                )
-                Spacer(modifier = Modifier.height(24.dp))
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Weight
+                        Text(
+                            text = stringResource(id = R.string.weight_label),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = Color(0xFF005800),
+                        )
+                        Text(
+                            text = "${pokemonDetail.weight} kg",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = Color.Black,
+                        )
+                    }
 
-                // Types
-                Text(
-                    text = stringResource(id = R.string.types_label),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.Gray
-                )
-                pokemonDetail.types.forEach { type ->
-                    Text(
-                        text = type.formatToUserFriendly(),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Height
+                        Text(
+                            text = stringResource(id = R.string.height_label),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = Color(0xFF005800),
+                        )
+                        Text(
+                            text = "${pokemonDetail.height} m",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = Color.Black,
+                        )
+                    }
                 }
-                Spacer(modifier = Modifier.height(24.dp))
 
-                // Stats
-                Text(
-                    text = stringResource(id = R.string.stats_label),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.Gray
-                )
-                pokemonDetail.stats.forEach { stat ->
-                    Text(
-                        text = stat.formatToUserFriendly(),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-                Spacer(modifier = Modifier.height(24.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 12.dp, end = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
 
-                // Abilities
-                Text(
-                    text = stringResource(id = R.string.abilities_label),
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = Color.Gray
-                )
-                pokemonDetail.abilities.forEach { ability ->
-                    Text(
-                        text = ability.formatToUserFriendly(),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Types
+                        Text(
+                            text = stringResource(id = R.string.types_label),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = Color(0xFF005800),
+                            textAlign = TextAlign.Center,
+                        )
+                        pokemonDetail.types.forEach { type ->
+                            Text(
+                                text = type.formatToUserFriendly(),
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Stats
+                        Text(
+                            text = stringResource(id = R.string.stats_label),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = Color(0xFF005800),
+                        )
+                        pokemonDetail.stats.forEach { stat ->
+                            Text(
+                                text = stat.formatToUserFriendly(),
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                        }
+                    }
+
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Abilities
+                        Text(
+                            text = stringResource(id = R.string.abilities_label),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = Color(0xFF005800),
+                        )
+                        pokemonDetail.abilities.forEach { ability ->
+                            Text(
+                                text = ability.formatToUserFriendly(),
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                        }
+                    }
                 }
             }
         }

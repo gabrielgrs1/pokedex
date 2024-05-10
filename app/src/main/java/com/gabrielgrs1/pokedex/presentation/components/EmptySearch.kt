@@ -14,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.gabrielgrs1.pokedex.R
 
 
 @Composable
@@ -31,13 +33,13 @@ fun EmptySearch(modifier: Modifier = Modifier) {
         Icon(
             imageVector = Icons.Default.Search,
             contentDescription = "icon search",
-            tint = Color.Black,
+            tint = Color(0xFF005800),
             modifier = Modifier.size(96.dp)
         )
         Text(
-            text = "Unfortunately no results were found, try searching for the pokemon's full name",
+            text = stringResource(id = R.string.empty_search),
             color = Color.Black,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(
                 top = 16.dp, start = 16.dp, end = 16.dp

@@ -31,13 +31,13 @@ fun PokemonListItem(
 ) {
     Column(
         modifier = modifier
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp)
             .wrapContentSize(Alignment.Center),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(
             shape = RoundedCornerShape(16.dp),
-            border = BorderStroke(2.dp, Color.Black),
+            border = BorderStroke(1.dp, Color.Black),
             modifier = Modifier
                 .padding(8.dp)
                 .wrapContentSize(Alignment.Center)

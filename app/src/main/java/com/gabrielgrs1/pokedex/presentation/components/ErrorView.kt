@@ -34,14 +34,18 @@ fun ErrorView(
             imageVector = Icons.Default.Close,
             contentDescription = "Error Icon",
             tint = Color.Red,
-            modifier = Modifier.size(48.dp)
+            modifier = Modifier.size(96.dp)
         )
         Text(
             text = errorMessage.orEmpty(),
             color = Color.Black,
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(
+                top = 16.dp,
+                start = 16.dp,
+                end = 16.dp
+            )
         )
     }
 }
