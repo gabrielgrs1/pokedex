@@ -53,7 +53,7 @@ class HomeViewModel(
                     if (query.length >= MIN_POKEMON_NAME_SIZE) {
                         isSearchListing = true
                         searchPokemon(query)
-                    } else if (query.isEmpty()) {
+                    } else if (isSearchListing && query.isEmpty()) {
                         isSearchListing = false
                         page = INITIAL_PAGE
                         _uiState.value = HomeUiState()
