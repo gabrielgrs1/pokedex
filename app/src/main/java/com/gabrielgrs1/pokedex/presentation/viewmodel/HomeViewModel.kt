@@ -96,7 +96,7 @@ class HomeViewModel(
     fun searchPokemon(name: String) {
         _searchQuery.value = name
 
-        searchJob?.cancel()
+        searchJob?.cancel() // Cancel the previous search job if it's still running
         searchJob = viewModelScope.launch(coroutineContext) {
             try {
                 val result = listRepository.searchPokemon(name)

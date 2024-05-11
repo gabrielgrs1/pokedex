@@ -27,6 +27,10 @@ class DetailsViewModel(
     val uiState: StateFlow<DetailsUiState> = _uiState.asStateFlow()
 
     fun getPokemon(name: String) {
+        _uiState.value = _uiState.value.copy(
+            isLoading = true,
+        )
+
         viewModelScope.launch(coroutineContext) {
             try {
                 detailsUseCase(name).collect {
@@ -36,7 +40,7 @@ class DetailsViewModel(
                                 isLoading = false,
                                 pokemon = null,
                                 isError = true,
-                                errorMessage = ""
+                                errorMessage = it.messageError.orEmpty()
                             )
                         }
 
@@ -50,7 +54,6 @@ class DetailsViewModel(
                         }
                     }
                 }
-
             } catch (e: HttpException) {
                 e.printStackTrace()
                 _uiState.value = _uiState.value.copy(
