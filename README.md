@@ -24,6 +24,10 @@ A simple pokedex app using the pokeapi.co API
 2. Run `./gradlew build` to build the project
 3. Run `./gradlew run` to run the project
 
+**or**
+
+Download the APK [here](https://github.com/gabrielgrs1/pokedex/releases/tag/v.1.0.0) and install on your phone.
+
 ## Usage
 
 1. Open the app
@@ -34,7 +38,9 @@ A simple pokedex app using the pokeapi.co API
 
 ## Coverage
 
-// ADD SCREENSHOTS
+![ViewModelCoverage](https://github.com/gabrielgrs1/pokedex/assets/29669990/5cffff2f-b03f-4996-abdd-e9396237f90b)
+![UseCase Coverage](https://github.com/gabrielgrs1/pokedex/assets/29669990/ad6bc36a-6a16-48b1-aabb-9e1bc2522ad9)
+
 
 ## Architecture
 
@@ -46,7 +52,8 @@ following layers:
 - Domain
 - Presentation
 
-// ADD SCREENSHOTS
+![Architeture](https://github.com/gabrielgrs1/pokedex/assets/29669990/0c0b9aa3-5498-4984-be98-b7647ca305d9)
+
 
 ### Data
 
@@ -62,7 +69,8 @@ components:
 - Models: Data classes that represent the data
 - Mappers: Converts data between the different layers
 
-// ADD SCREENSHOTS
+![Data Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/17ef990d-d184-4133-bd27-f26ace952bbf)
+
 
 ### Domain
 
@@ -73,7 +81,8 @@ The domain layer contains the business logic of the app. It consists of the foll
 - Mappers: Converts data between the different layers
 - Repository interface: Defines the methods that the repository must implement
 
-// ADD SCREENSHOTS
+![Domain Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/6c1df708-6d7f-4e07-b247-8ab58fc7a08e)
+
 
 ### Presentation
 
@@ -88,7 +97,8 @@ following components:
 - [UI Navigation](https://developer.android.com/jetpack/compose/navigation): Represents the events
   that can occur in the UI
 
-// ADD SCREENSHOTS
+![Presentation Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/ab86c4e8-4ad2-4f9a-895c-a97756a7b6fb)
+
 
 ## Libraries Used
 
@@ -112,11 +122,15 @@ following components:
 
 - JUnit - Unit testing framework for Java
 - MockK - Mocking library for Kotlin
-- Turbine - Testing library for Kotlin Coroutines]
+- Turbine - Testing library for Kotlin Coroutines
 
 ## Screenshots
 
-// ADD SCREENSHOTS
+![home](https://github.com/gabrielgrs1/pokedex/assets/29669990/00d0c5b8-4c5d-4ffb-adc9-6eee6e6409fb)
+![details](https://github.com/gabrielgrs1/pokedex/assets/29669990/51834caa-3d8d-4501-b7d7-eabac8ff6381)
+![search](https://github.com/gabrielgrs1/pokedex/assets/29669990/d444e6ec-1085-437d-853a-3aa43a9af8af)
+![empty-search](https://github.com/gabrielgrs1/pokedex/assets/29669990/f69e3d27-f0ce-4fb0-8063-fd82111a0953)
+
 
 ## Future Improvements
 
