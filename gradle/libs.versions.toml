@@ -2,7 +2,6 @@
 agp = "8.4.0"
 coil = "2.6.0"
 gson = "2.10.1"
-kluentAndroid = "1.72"
 koinBom = "3.5.6"
 kotlin = "1.9.23"
 coreKtx = "1.13.1"
@@ -25,7 +24,6 @@ turbine = "1.1.0"
 [libraries]
 # Androidx
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -44,13 +42,13 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-kluent-android = { module = "org.amshove.kluent:kluent-android", version.ref = "kluentAndroid" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4" }
 koin-test = { module = "io.insert-koin:koin-test" }
 androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "room" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 # Network
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -61,9 +59,6 @@ okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-intercepto
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 coil-compose-base = { module = "io.coil-kt:coil-compose-base", version.ref = "coil" }
-
-# Logger
-timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 # DI
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koinBom" }
@@ -77,5 +72,4 @@ koin-core = { module = "io.insert-koin:koin-core" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 

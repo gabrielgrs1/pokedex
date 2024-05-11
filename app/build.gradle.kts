@@ -108,13 +108,9 @@ dependencies {
     implementation(libs.koin.androidx.compose.navigation)
     implementation(libs.koin.compose)
 
-    // Logger
-    implementation(libs.timber)
-
     // Test
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
-    testImplementation(libs.kluent.android)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.koin.test)
     testImplementation(libs.koin.test.junit4)
