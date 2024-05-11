@@ -10,6 +10,13 @@
 
 A simple pokedex app using the pokeapi.co API
 
+## Screenshots
+
+![home](https://github.com/gabrielgrs1/pokedex/assets/29669990/00d0c5b8-4c5d-4ffb-adc9-6eee6e6409fb)
+![details](https://github.com/gabrielgrs1/pokedex/assets/29669990/51834caa-3d8d-4501-b7d7-eabac8ff6381)
+![search](https://github.com/gabrielgrs1/pokedex/assets/29669990/d444e6ec-1085-437d-853a-3aa43a9af8af)
+![empty-search](https://github.com/gabrielgrs1/pokedex/assets/29669990/f69e3d27-f0ce-4fb0-8063-fd82111a0953)
+
 ## Features
 
 - View a list of pokemon
@@ -123,14 +130,6 @@ following components:
 - JUnit - Unit testing framework for Java
 - MockK - Mocking library for Kotlin
 - Turbine - Testing library for Kotlin Coroutines
-
-## Screenshots
-
-![home](https://github.com/gabrielgrs1/pokedex/assets/29669990/00d0c5b8-4c5d-4ffb-adc9-6eee6e6409fb)
-![details](https://github.com/gabrielgrs1/pokedex/assets/29669990/51834caa-3d8d-4501-b7d7-eabac8ff6381)
-![search](https://github.com/gabrielgrs1/pokedex/assets/29669990/d444e6ec-1085-437d-853a-3aa43a9af8af)
-![empty-search](https://github.com/gabrielgrs1/pokedex/assets/29669990/f69e3d27-f0ce-4fb0-8063-fd82111a0953)
-
 
 ## Future Improvements
 
