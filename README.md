@@ -116,7 +116,7 @@ following components:
 
 ### Dependency Injection
 
-- Koin - Dependency injection framework for Kotlin
+- Koin - Dependency injection framework for Kotlin 
 
 ### Testing
 
