@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://android-arsenal.com/api?level=34"><img alt="API" src="https://img.shields.io/badge/API-34%2B-brightgreen.svg?style=flat"/></a>
+    <a href="https://android-arsenal.com/api?level=26"><img alt="API" src="https://img.shields.io/badge/API-26%2B-brightgreen.svg?style=flat"/></a>
     <a href="https://kotlinlang.org"><img alt="API" src="https://img.shields.io/badge/Kotlin-1.9.23-blue.svg"/></a>
     <a href="https://developer.android.com/studio/releases/gradle-plugin"><img alt="API" src="https://img.shields.io/badge/AGP-8.4.0-green?style=flat"/></a>
     <a href="https://codebeat.co/projects/github-com-gabrielgrs1-pokedex-main"><img alt="codebeat badge" src="https://codebeat.co/badges/72a4ee7d-4f44-4d05-9ddc-e396b2fe3131" /></a>
@@ -31,7 +31,7 @@ A simple pokedex app using the pokeapi.co API
 2. Run `./gradlew build` to build the project
 3. Run `./gradlew run` to run the project
 
-**or**
+**OR**
 
 Download the APK [here](https://github.com/gabrielgrs1/pokedex/releases/tag/v.1.0.0) and install on your phone.
 
@@ -59,7 +59,7 @@ following layers:
 - Domain
 - Presentation
 
-![Architeture](https://github.com/gabrielgrs1/pokedex/assets/29669990/0c0b9aa3-5498-4984-be98-b7647ca305d9)
+![Architeture](https://github.com/gabrielgrs1/pokedex/assets/29669990/4a322b24-02cb-48c4-a4ce-df5c866f3d2e)
 
 
 ### Data
@@ -76,7 +76,7 @@ components:
 - Models: Data classes that represent the data
 - Mappers: Converts data between the different layers
 
-![Data Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/17ef990d-d184-4133-bd27-f26ace952bbf)
+![Data Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/a00f4d5e-a049-4451-a444-eb2499eb9fa1)
 
 
 ### Domain
@@ -88,38 +88,37 @@ The domain layer contains the business logic of the app. It consists of the foll
 - Mappers: Converts data between the different layers
 - Repository interface: Defines the methods that the repository must implement
 
-![Domain Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/6c1df708-6d7f-4e07-b247-8ab58fc7a08e)
-
+![Domain Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/8b43dd7e-8dc9-4ee4-9d43-b1b3584f2cee)
 
 ### Presentation
 
 The presentation layer is responsible for displaying the data to the user. It consists of the
 following components:
 
-- Screens: Defines the UI of the app
-- Components: Reusable UI components
+- [Screens](https://developer.android.com/develop/ui/compose): Defines the UI of the app
+- [Components](https://developer.android.com/develop/ui/compose/components): Reusable UI components
 - [View Models](https://developer.android.com/topic/libraries/architecture/viewmodel): Contains the
   logic for the UI
 - [UI State](https://developer.android.com/develop/ui/compose/state): Represents the state of the UI
 - [UI Navigation](https://developer.android.com/jetpack/compose/navigation): Represents the events
   that can occur in the UI
 
-![Presentation Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/ab86c4e8-4ad2-4f9a-895c-a97756a7b6fb)
+![Presentation Layer ](https://github.com/gabrielgrs1/pokedex/assets/29669990/c7b8ab11-6707-452b-ba18-38df7e1b8d67)
 
 
-## Libraries Used
+##  Used Libraries
 
 ### UI
 
-- Jetpack Compose - Modern UI toolkit for building native Android UI
-- Jetpack Navigation - Navigation component that helps to implement navigation in the app
+- [Jetpack Compose](https://developer.android.com/develop/ui/compose) - Modern UI toolkit for building native Android UI
+- [Jetpack Navigation](https://developer.android.com/guide/navigation) - Navigation component that helps to implement navigation in the app
 
 ### Data
 
-- Retrofit - Type-safe HTTP client for Android and Java
-- Room - SQLite object mapping library
-- Coil - Image loading library for Android backed by Kotlin Coroutines
-- Kotlin Coroutines - Asynchronous programming in Kotlin
+- [Retrofit](https://square.github.io/retrofit/) - Type-safe HTTP client for Android and Java
+- [Room](https://developer.android.com/jetpack/androidx/releases/room) - SQLite object mapping library
+- [Coil](https://coil-kt.github.io/coil/compose/) - Image loading library for Android backed by Kotlin Coroutines
+- [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html#tutorials) - Asynchronous programming in Kotlin
 
 ### Dependency Injection
 
@@ -127,12 +126,13 @@ following components:
 
 ### Testing
 
-- JUnit - Unit testing framework for Java
-- MockK - Mocking library for Kotlin
-- Turbine - Testing library for Kotlin Coroutines
+- [JUnit](https://developer.android.com/training/testing/local-tests) - Unit testing framework for Java
+- [MockK](https://mockk.io/) - Mocking library for Kotlin
+- [Turbine](https://github.com/cashapp/turbine) - Testing library for Kotlin Coroutines
 
 ## Future Improvements
 
+- Implement CI/CD pipeline (Unit tests, UI tests, Coverage, Linting, etc.)
 - Improve search functionality
 - Add UI tests
 - Add more details to the pokemon details screen and improve the UI
@@ -140,4 +140,3 @@ following components:
 - Add more features like filtering pokemon by type
 - Change DI framework to Hilt
 - Implement a modular architecture
-- Implement CI/CD pipeline (Unit tests, UI tests, Coverage, Linting, etc.)
