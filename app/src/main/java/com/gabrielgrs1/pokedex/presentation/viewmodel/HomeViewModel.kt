@@ -2,12 +2,9 @@ package com.gabrielgrs1.pokedex.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gabrielgrs1.pokedex.core.platform.UseCaseResult
-import com.gabrielgrs1.pokedex.data.model.toDomain
+import com.gabrielgrs1.pokedex.core.platform.Result
 import com.gabrielgrs1.pokedex.domain.repository.ListRepository
-import com.gabrielgrs1.pokedex.domain.usecase.ListUseCase
 import com.gabrielgrs1.pokedex.presentation.uistate.HomeUiState
-import java.net.HttpURLConnection
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -19,11 +16,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 
 @OptIn(FlowPreview::class)
 class HomeViewModel(
-    private val listUseCase: ListUseCase,
     private val listRepository: ListRepository,
     private val coroutineContext: CoroutineContext = Dispatchers.IO + SupervisorJob(),
 ) : ViewModel() {
@@ -65,9 +60,9 @@ class HomeViewModel(
 
     fun listPokemons() {
         viewModelScope.launch(coroutineContext) {
-            listUseCase(page).collect {
+            listRepository.listPokemons(page).collect {
                 when (it) {
-                    is UseCaseResult.Error -> {
+                    is Result.Error -> {
                         _uiState.value = _uiState.value.copy(
                             pokemonList = emptyList(),
                             isLoading = false,
@@ -77,7 +72,7 @@ class HomeViewModel(
                         )
                     }
 
-                    is UseCaseResult.Success -> {
+                    is Result.Success -> {
                         val newList = _uiState.value.pokemonList.toMutableList() + it.value
 
                         _uiState.value = _uiState.value.copy(
@@ -87,6 +82,9 @@ class HomeViewModel(
                             isEmpty = false,
                             errorMessage = ""
                         )
+                    }
+
+                    Result.Empty -> { /* Do Nothing */
                     }
                 }
             }
@@ -98,34 +96,35 @@ class HomeViewModel(
 
         searchJob?.cancel() // Cancel the previous search job if it's still running
         searchJob = viewModelScope.launch(coroutineContext) {
-            try {
-                val result = listRepository.searchPokemon(name)
+            listRepository.searchPokemon(name).collect {
+                when (it) {
+                    is Result.Error -> {
+                        _uiState.value = _uiState.value.copy(
+                            pokemonList = emptyList(),
+                            isError = true,
+                            isLoading = false,
+                            isEmpty = false,
+                            errorMessage = it.messageError.orEmpty()
+                        )
+                    }
 
-                _uiState.value = _uiState.value.copy(
-                    pokemonList = listOf(result.toDomain()),
-                    isError = false,
-                    isLoading = false,
-                    isEmpty = false,
-                    errorMessage = ""
-                )
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                if (e.code() == HttpURLConnection.HTTP_NOT_FOUND) {
-                    _uiState.value = _uiState.value.copy(
-                        pokemonList = emptyList(),
-                        isError = false,
-                        isLoading = false,
-                        isEmpty = true,
-                        errorMessage = e.message()
-                    )
-                } else {
-                    _uiState.value = _uiState.value.copy(
-                        pokemonList = emptyList(),
-                        isError = true,
-                        isLoading = false,
-                        isEmpty = false,
-                        errorMessage = e.message()
-                    )
+                    is Result.Success -> {
+                        _uiState.value = _uiState.value.copy(
+                            pokemonList = listOf(it.value),
+                            isLoading = false,
+                            isError = false,
+                        )
+                    }
+
+                    is Result.Empty -> {
+                        _uiState.value = _uiState.value.copy(
+                            pokemonList = emptyList(),
+                            isError = false,
+                            isLoading = false,
+                            isEmpty = true,
+                            errorMessage = "",
+                        )
+                    }
                 }
             }
         }

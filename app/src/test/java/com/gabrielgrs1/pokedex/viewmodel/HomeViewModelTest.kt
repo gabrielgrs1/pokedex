@@ -1,12 +1,11 @@
 package com.gabrielgrs1.pokedex.viewmodel
 
 import com.gabrielgrs1.pokedex.MainDispatcherRule
-import com.gabrielgrs1.pokedex.core.platform.UseCaseResult
+import com.gabrielgrs1.pokedex.core.platform.Result
 import com.gabrielgrs1.pokedex.data.model.PokemonSearchResponse
 import com.gabrielgrs1.pokedex.data.model.toDomain
 import com.gabrielgrs1.pokedex.domain.model.Pokemon
 import com.gabrielgrs1.pokedex.domain.repository.ListRepository
-import com.gabrielgrs1.pokedex.domain.usecase.ListUseCase
 import com.gabrielgrs1.pokedex.presentation.uistate.HomeUiState
 import com.gabrielgrs1.pokedex.presentation.viewmodel.HomeViewModel
 import com.gabrielgrs1.pokedex.presentation.viewmodel.HomeViewModel.Companion.INITIAL_PAGE
@@ -28,7 +27,6 @@ import retrofit2.Response
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
-    private val listUseCase: ListUseCase = mockk(relaxed = true)
     private val listRepository: ListRepository = mockk(relaxed = true)
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var stateValue: HomeUiState
@@ -39,7 +37,6 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         homeViewModel = HomeViewModel(
-            listUseCase = listUseCase,
             listRepository = listRepository,
             coroutineContext = UnconfinedTestDispatcher()
         )
@@ -59,7 +56,7 @@ class HomeViewModelTest {
         runTest {
             // Given
             val pokemonList = listOf(Pokemon("Pikachu", ""), Pokemon("Charmander", ""))
-            coEvery { listUseCase(0) } returns flowOf(UseCaseResult.Success(pokemonList))
+            coEvery { listRepository.listPokemons(0) } returns flowOf(Result.Success(pokemonList))
 
             // When
             homeViewModel.listPokemons()
@@ -76,7 +73,7 @@ class HomeViewModelTest {
     fun `when listPokemons fails given listUseCase returns error then update uiState with error`() =
         runTest {
             // Given
-            coEvery { listUseCase(any()) } returns flowOf(UseCaseResult.Error("error"))
+            coEvery { listRepository.listPokemons(any()) } returns flowOf(Result.Error("error"))
 
             // When
             homeViewModel.listPokemons()
@@ -102,7 +99,7 @@ class HomeViewModelTest {
                 )
             )
 
-            coEvery { listRepository.searchPokemon(any()) } returns pokemon
+            coEvery { listRepository.searchPokemon(any()) } returns flowOf(Result.Success(pokemon.toDomain()))
 
             // When
             homeViewModel.searchPokemon("Pikachu")
@@ -170,10 +167,9 @@ class HomeViewModelTest {
         // When
         homeViewModel.getNextPage()
 
-
         // Then
         coVerify {
-            listUseCase(page++)
+            listRepository.listPokemons(page++)
         }
     }
 }

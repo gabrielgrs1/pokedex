@@ -1,16 +1,14 @@
 package com.gabrielgrs1.pokedex.viewmodel
 
 import com.gabrielgrs1.pokedex.MainDispatcherRule
-import com.gabrielgrs1.pokedex.core.platform.UseCaseResult
-import com.gabrielgrs1.pokedex.data.datasource.detail.PokemonDetailDao
+import com.gabrielgrs1.pokedex.core.platform.Result
 import com.gabrielgrs1.pokedex.data.model.PokemonDetailEntity
 import com.gabrielgrs1.pokedex.data.model.PokemonDetailResponse
 import com.gabrielgrs1.pokedex.data.model.toDomain
-import com.gabrielgrs1.pokedex.domain.usecase.DetailsUseCase
+import com.gabrielgrs1.pokedex.domain.repository.DetailsRepository
 import com.gabrielgrs1.pokedex.presentation.uistate.DetailsUiState
 import com.gabrielgrs1.pokedex.presentation.viewmodel.DetailsViewModel
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.mockk
 import java.net.HttpURLConnection
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,8 +25,7 @@ import retrofit2.Response
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class DetailsViewModelTest {
-    private val detailsUseCase: DetailsUseCase = mockk(relaxed = true)
-    private val dao: PokemonDetailDao = mockk(relaxed = true)
+    private val detailsRepository: DetailsRepository = mockk(relaxed = true)
     private lateinit var detailsViewModel: DetailsViewModel
     private lateinit var stateValue: DetailsUiState
 
@@ -38,8 +35,7 @@ class DetailsViewModelTest {
     @Before
     fun setup() {
         detailsViewModel = DetailsViewModel(
-            detailsUseCase = detailsUseCase,
-            dao = dao,
+            detailsRepository = detailsRepository,
             coroutineContext = UnconfinedTestDispatcher()
         )
     }
@@ -84,7 +80,11 @@ class DetailsViewModelTest {
                 ),
             )
 
-            coEvery { detailsUseCase(any()) } returns flowOf(UseCaseResult.Success(pokemonDetail.toDomain()))
+            coEvery { detailsRepository.getPokemonDetailByName(any()) } returns flowOf(
+                Result.Success(
+                    pokemonDetail.toDomain()
+                )
+            )
 
             // When
             detailsViewModel.getPokemon("pikachu")
@@ -101,8 +101,11 @@ class DetailsViewModelTest {
         runTest {
             // Given
             val messageError = "error"
-            coEvery { detailsUseCase(any()) } returns flowOf(UseCaseResult.Error(messageError))
-
+            coEvery { detailsRepository.getPokemonDetailByName(any()) } returns flowOf(
+                Result.Error(
+                    messageError
+                )
+            )
 
             // When
             detailsViewModel.getPokemon("Pikachu")
@@ -127,7 +130,7 @@ class DetailsViewModelTest {
                 )
             )
 
-            coEvery { detailsUseCase(any()) } throws httpException
+            coEvery { detailsRepository.getPokemonDetailByName(any()) } throws httpException
 
             // When
             detailsViewModel.getPokemon("Pikachu")
@@ -141,35 +144,37 @@ class DetailsViewModelTest {
         }
 
     @Test
-    fun `when favoritePokemon was called given success then do not throw exception and update UI with pokemon favoited`() = runTest {
-        // When
-        val pokemonName = "pikachu"
-        val isFavorite = true
-        val pokemonDetailEntity = PokemonDetailEntity(
-            id = 1,
-            name = "",
-            weight = "1",
-            height = "1",
-            types = listOf(""),
-            stats = listOf(""),
-            abilities = listOf(""),
-            imageUrl = "",
-            isFavorite = isFavorite
-        )
+    fun `when favoritePokemon was called given success then do not throw exception and update UI with pokemon favoited`() =
+        runTest {
+            // When
+            val pokemonName = "pikachu"
+            val isFavorite = true
+            val pokemonDetailEntity = PokemonDetailEntity(
+                id = 1,
+                name = "",
+                weight = "1",
+                height = "1",
+                types = listOf(""),
+                stats = listOf(""),
+                abilities = listOf(""),
+                imageUrl = "",
+                isFavorite = isFavorite
+            )
 
-        coEvery { dao.getPokemonDetailByName(pokemonName) } returns pokemonDetailEntity
+            coEvery { detailsRepository.getPokemonDetailByName(pokemonName) } returns flowOf(
+                Result.Success(
+                    pokemonDetailEntity.toDomain()
+                )
+            )
 
-        // Given
-        detailsViewModel.favoritePokemon(pokemonName, isFavorite)
+            // Given
+            detailsViewModel.favoritePokemon(pokemonName, isFavorite)
 
-        // Then
-        coVerify { dao.favoritePokemon(pokemonName, isFavorite) }
-
-        stateValue = detailsViewModel.uiState.value
-        assertEquals(false, stateValue.isError)
-        assertEquals(false, stateValue.isLoading)
-        assertEquals(true, stateValue.errorMessage.isEmpty())
-        assertEquals(true, stateValue.pokemon == pokemonDetailEntity.toDomain())
-    }
+            stateValue = detailsViewModel.uiState.value
+            assertEquals(false, stateValue.isError)
+            assertEquals(false, stateValue.isLoading)
+            assertEquals(true, stateValue.errorMessage.isEmpty())
+            assertEquals(true, stateValue.pokemon == pokemonDetailEntity.toDomain())
+        }
 
 }

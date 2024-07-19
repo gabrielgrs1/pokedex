@@ -132,11 +132,15 @@ following components:
 
 ## Future Improvements
 
+- Add UI tests
+- Add screenshot tests
+- Implement jetpack nagivation
+- Implement jacoco for code coverage
+- Implement SonarQube for code quality
+- Add animations
 - Implement CI/CD pipeline (Unit tests, UI tests, Coverage, Linting, etc.)
 - Improve search functionality
-- Add UI tests
 - Add more details to the pokemon details screen and improve the UI
-- Add animations
 - Add more features like filtering pokemon by type
-- Change DI framework to Hilt
+- Publish google store
 - Implement a modular architecture

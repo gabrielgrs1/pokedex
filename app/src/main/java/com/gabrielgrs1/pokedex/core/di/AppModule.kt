@@ -10,8 +10,6 @@ import com.gabrielgrs1.pokedex.data.repository.DetailsRepositoryImpl
 import com.gabrielgrs1.pokedex.data.repository.ListRepositoryImpl
 import com.gabrielgrs1.pokedex.domain.repository.DetailsRepository
 import com.gabrielgrs1.pokedex.domain.repository.ListRepository
-import com.gabrielgrs1.pokedex.domain.usecase.DetailsUseCase
-import com.gabrielgrs1.pokedex.domain.usecase.ListUseCase
 import com.gabrielgrs1.pokedex.presentation.viewmodel.DetailsViewModel
 import com.gabrielgrs1.pokedex.presentation.viewmodel.HomeViewModel
 import com.google.gson.GsonBuilder
@@ -55,36 +53,22 @@ val networkConfigurationModule = module {
 val detailsModule = module {
     single { get<Retrofit>().create(DetailsApi::class.java) }
     single { get<AppDataBase>().pokemonDetailDao() }
-    single<DetailsRepository> { DetailsRepositoryImpl(get()) }
+    single<DetailsRepository> { DetailsRepositoryImpl(api = get(), dao = get()) }
 
-    factory {
-        DetailsUseCase(
-            detailsRepository = get(),
-            dao = get(),
+    viewModel {
+        DetailsViewModel(
+            detailsRepository = get()
         )
     }
-
-    viewModel { DetailsViewModel(
-        detailsUseCase = get(),
-        dao = get()
-    ) }
 }
 
 val homeModule = module {
     single { get<Retrofit>().create(ListApi::class.java) }
     single { get<AppDataBase>().pokemonListDao() }
-    single<ListRepository> { ListRepositoryImpl(api = get()) }
-
-    factory {
-        ListUseCase(
-            listRepository = get(),
-            dao = get(),
-        )
-    }
+    single<ListRepository> { ListRepositoryImpl(dao = get(), api = get()) }
 
     viewModel {
         HomeViewModel(
-            listUseCase = get(),
             listRepository = get()
         )
     }
