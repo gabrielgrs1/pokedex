@@ -3,7 +3,7 @@
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
-    id("kotlin-parcelize") // FIXME: Move to version catalog
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
